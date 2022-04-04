@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+</head>
+<body>
+    <h1>EXPENSE TRACKER</h1>
+    <form id="expenseForm">
+        <label  for="month">Month:-</label>
+        <select id="month" name="month">
+            <option>--</option>
+            <option>January</option>
+            <option>February</option>
+            <option>March</option>
+            <option>April</option>
+            <option>May</option>
+            <option>June</option>
+            <option>July</option>
+            <option>August</option>
+            <option>September</option>
+            <option>October</option>
+            <option>November</option>
+            <option>December</option>
+        </select>
+        <label for="income">Income</label>
+      <input id="income" type="number" name="income" placeholder="Enter Income ">
+      <label for="expense">Expense</label>
+      <input id="expense" type="number"  name="expense" placeholder="Enter Expense">
+      <input type="submit">
+    </form>
+    <div id="container">
+
+    </div>
+</body>
+<script>
+  document.querySelector("form").addEventListener("submit",expenseFinder);
+  var expenseData=[]
+      {
+          month:"January",
+          income: 50000,
+          expense: 8000 ,
+      }
+    ]  
+    function expenseFinder()
+  {
+      event.preventDefault();
+      var expenseObj={
+          month: document.getElementById("month").value,
+          income: document.getElementById("income").value,
+          expense: document.getElementById("expense").value
+
+      };
+      expenseData.push(expenseObj);
+      displayExpense(expenseData);
+      if(localStorage.getItem('expenseData')===null)
+      {
+          localStorage.setItem('expenseData',JSON.stringify(expenseData));
+      }
+
+     var expenseData1=JSON.parse(localStorage.getItem('expenseData'));
+     expenseData1.push(expenseObj);
+     
+     localStorage.setItem('expenseData',JSON.stringify(expenseData1));
+
+  }
+
+  function displayExpense(expenseData)
+  {
+      document.getElementById("container").innerText="";
+      expenseData.forEach(element => {
+          var box=document.createElement('div');
+          var month=document.createElement('h3');
+          month.innerText=element.month;
+          var income=document.createElement('h4');
+          income.innerText=element.income;
+          var expense=document.createElement('h4');
+          expense.innerText=element.expense;
+          box.append(month,income,expense);
+
+         document.getElementById("container").append(box); 
+      });
+  }
+</script>
+</html>
